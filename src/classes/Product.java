@@ -5,11 +5,11 @@ public class Product {
     private String category;
     private String ref;
     private String description;
-    private String[] specs;
+    private String specs;
     private float price;
     
     
-	public Product(String name, String category, String ref, String description, String[] specs, float price) {
+	public Product(String name, String category, String ref, String description, String specs, float price) {
 		super();
 		this.name = name;
 		this.category = category;
@@ -19,7 +19,10 @@ public class Product {
 		this.price = price;
 	}
 	
-	
+	public String StringIt(){
+		String returned = this.ref+"|"+this.category+"|"+this.name+"|"+this.description+"|"+this.specs+"|"+this.price;
+		return returned;
+	}
 	
 	public String getName() {
 		return name;
@@ -45,10 +48,10 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String[] getSpecs() {
+	public String getSpecs() {
 		return specs;
 	}
-	public void setSpecs(String[] specs) {
+	public void setSpecs(String specs) {
 		this.specs = specs;
 	}
 	public float getPrice() {
