@@ -1,6 +1,6 @@
-package services;
+package source.services;
 
-import classes.Product;
+import source.classes.Product;
 
 abstract class Search {
 

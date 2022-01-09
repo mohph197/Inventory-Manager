@@ -1,7 +1,8 @@
+package source;
 import java.io.IOException;
 import java.util.Scanner;
 
-import classes.Client;
+import source.classes.Client;
 
 public class App {
     static Scanner cin = new Scanner(System.in);

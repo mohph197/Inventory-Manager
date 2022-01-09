@@ -1,4 +1,4 @@
-package classes;
+package source.classes;
 
 public class Product {
     private String name;
