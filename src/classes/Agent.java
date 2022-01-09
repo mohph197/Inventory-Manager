@@ -6,9 +6,9 @@ public class Agent {
     }
 
     static void ReturnProduct(String ref) {
-        Product[] results = Search.ByRef(ref);
-        if (results.length == 1) {
-            Inventory.AddProduct(results[0]);
-        }
+        // Product[] results = ;
+        // if (results.length == 1) {
+        //     Inventory.AddProduct(results[0]);
+        // }
     }
 }
