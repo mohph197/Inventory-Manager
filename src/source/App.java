@@ -14,8 +14,7 @@ public class App {
         try {
             Runtime.getRuntime().exec("cls");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         if (choice == 1) GotoAgent();
         else GotoClient();

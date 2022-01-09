@@ -3,7 +3,7 @@ package source.classes;
 import java.io.IOException;
 import java.util.Scanner;
 
-// import services.Search;
+import source.services.Search;
 
 public abstract class Client {
     String name;
@@ -28,8 +28,7 @@ public abstract class Client {
         try {
             Runtime.getRuntime().exec("cls");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         int choice = cin.nextInt();
         switch (choice) {
@@ -66,29 +65,28 @@ public abstract class Client {
         try {
             Runtime.getRuntime().exec("cls");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         switch (choice) {
             case 1:
                 System.out.print("Enter search key: ");
                 String key = cin.nextLine();
-                // Search.ByName(key);
+                Search.ByName(key);
                 break;
             case 2:
                 System.out.print("Enter reference: ");
                 String ref = cin.nextLine();
-                // Search.ByRef(ref);
+                Search.ByRef(ref);
                 break;
             case 3:
                 System.out.print("Enter description: ");
                 String desc = cin.nextLine();
-                // Search.ByDescription(desc);
+                Search.ByDescription(desc);
                 break;
             case 4:
                 System.out.print("Enter description: ");
                 String spec = cin.nextLine();
-                // Search.BySpecs(spec);
+                Search.BySpecs(spec);
                 break;
             default:
                 break;
