@@ -1,6 +1,6 @@
 package classes;
 
-public class Stock {
+public class Inventory {
     static void AddProduct(Product prod){
 
     }
