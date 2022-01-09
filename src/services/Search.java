@@ -1,6 +1,8 @@
-package classes;
+package services;
 
-public class Search {
+import classes.Product;
+
+abstract class Search {
 
     static Product[] ByName(String key){
         
