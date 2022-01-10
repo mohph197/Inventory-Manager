@@ -1,20 +1,25 @@
 package source.classes;
-
 import java.io.IOException;
 import java.util.Scanner;
-
 import source.services.Search;
 
 public abstract class Client {
+    String id;
     String name;
     String surname;
     String address;
 
-    public Client(String name, String surname, String address) {
+    public Client(String id, String name, String surname, String address) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.address = address;
     }
+
+    public String StringIt(){
+		String returned = this.id+"|"+this.name+"|"+this.surname+"|"+this.address+"|";
+		return returned;
+	}
 
     public void ShowActions() {
         Scanner cin = new Scanner(System.in);
