@@ -23,5 +23,9 @@ public class Inventory {
         return 0;
     }
 
+    static Product[] SearchProduct(String method, String key) {
+        
+        return new Product[0];
+    }
     
 }

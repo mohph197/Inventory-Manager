@@ -1,13 +1,12 @@
 package source.classes;
 import java.io.IOException;
 import java.util.Scanner;
-import source.services.Search;
 
 public abstract class Client {
-    String id;
-    String name;
-    String surname;
-    String address;
+    private String id;
+    private String name;
+    private String surname;
+    private String address;
 
     public Client(String id, String name, String surname, String address) {
         this.id = id;
@@ -41,10 +40,10 @@ public abstract class Client {
                 SearchProduct();
                 break;
             case 2:
-                ShowProducts();
+                ShowProducts(Inventory.GetProducts());
                 break;
             case 3:
-                CheckCart();
+                Cart.ShowCart(id);
                 break;
             case 4:
                 RequestDiscount();
@@ -72,39 +71,40 @@ public abstract class Client {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        switch (choice) {
-            case 1:
-                System.out.print("Enter search key: ");
-                String key = cin.nextLine();
-                Search.ByName(key);
-                break;
-            case 2:
-                System.out.print("Enter reference: ");
-                String ref = cin.nextLine();
-                Search.ByRef(ref);
-                break;
-            case 3:
-                System.out.print("Enter description: ");
-                String desc = cin.nextLine();
-                Search.ByDescription(desc);
-                break;
-            case 4:
-                System.out.print("Enter description: ");
-                String spec = cin.nextLine();
-                Search.BySpecs(spec);
-                break;
-            default:
-                break;
-        }
+        System.out.print("Enter search key: ");
+        ShowProducts(Inventory.SearchProduct(
+            choice == 1 ?"name"
+           :choice == 2 ?"ref"
+           :choice == 3 ?"desc"
+           :choice == 4 ?"spec"
+           :null, cin.nextLine())
+        );
         cin.close();
     }
-    private void ShowProducts() {
-        Product[] products = Inventory.GetProducts();
-        for (int i = 0; i < products.length; i++) {
-            System.out.println((i+1) + "- " + products[i].getName() + ' ' + products[i].getPrice());
+    private void ShowProducts(Product[] products) {
+        Scanner cin = new Scanner(System.in);
+        int choice = 1;
+        if (products.length > 1) {
+            for (int i = 0; i < products.length; i++) {
+                System.out.println((i+1) + "- " + products[i].StringIt());
+            }
+            System.out.println("0- Go Back");
+            System.out.print("Choose a number: ");
+            choice = cin.nextInt();
+            if (choice == 0) {
+                cin.close();
+                return;
+            }
         }
+        System.out.println("The Product you selected is:");
+        System.out.println(products[choice - 1].StringIt());
+        System.out.println("So you want to:");
+        System.out.println("1- Add to Cart   0- Go Back");
+        System.out.print("Choose a number: ");
+        choice = cin.nextInt();
+        if (choice == 1) 
+        cin.close();
     }
-    private void CheckCart() {}
     private void RequestDiscount() {}
     private void CheckAccount() {}
 }
