@@ -9,7 +9,7 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Hello please specify what kind of user you are:");
         System.out.println("1- Agent          2- Client");
-        System.out.print("Choisir un numero: ");
+        System.out.print("Choose a number: ");
         int choice = cin.nextInt();
         try {
             Runtime.getRuntime().exec("cls");
@@ -23,7 +23,7 @@ public class App {
     static void GotoClient() {
         System.out.println("Welcome!");
         System.out.println("1- Sign in          2- Sign Up");
-        System.out.print("Choisir un numero: ");
+        System.out.print("Choose a number: ");
         int choice = cin.nextInt();
         Client client = choice == 1 ?SignIn('c') :SignUp('c');
         if (client == null) return;

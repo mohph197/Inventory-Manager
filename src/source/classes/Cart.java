@@ -1,10 +1,15 @@
 package source.classes;
 
+import source.services.Purchase;
+
 public class Cart {
     public static void ShowCart(String ClienID) {
-        
     }
 
-    // TODO remaning time.
+    public static boolean AddPurchase(Purchase pur) {
+        return true;
+    }
+
+    //TODO: Implement methods
 }
 

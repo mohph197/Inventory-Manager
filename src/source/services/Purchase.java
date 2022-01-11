@@ -4,11 +4,11 @@ import java.time.LocalDate;
 public class Purchase {
     private LocalDate date;
     private String ref;
-    private String qte;
+    private int qte;
     private float price;
 
 
-    public Purchase(String ref, String qte, float price) {
+    public Purchase(String ref, int qte, float price) {
         this.date = LocalDate.now();
         this.ref = ref;
         this.qte = qte;
