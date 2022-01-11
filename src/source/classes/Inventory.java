@@ -1,12 +1,16 @@
 package source.classes;
+// import java.util.logging.FileHandler;
+import source.services.FileHandler;
 
 public class Inventory {
     static void AddProduct(Product prod){
+        String str = prod.StringIt();
+        FileHandler.Add("./Data/Inventory.txt", str);
 
     }
 
-    static void RemoveProduct(String ref, int qte){
-
+    static void ChangeQuantity(String ref, int qte){
+        
     }
 
     static void ChangePrice(float price){
