@@ -119,7 +119,7 @@ public class Client {
             System.out.println(e.getMessage());
         }
         System.out.print("Enter search key: ");
-        ShowProducts(Inventory.SearchProduct(
+        ShowProducts(Inventory.SearchProducts(
             choice == 1 ?"name"
            :choice == 2 ?"ref"
            :choice == 3 ?"desc"
@@ -153,7 +153,7 @@ public class Client {
             ShowProducts(products);
         }
         Product product = products[choice - 1];
-        int availableQte = Inventory.GetQuantity(product.getRef());
+        int availableQte = Inventory.AvailableQuantity(product.getRef());
         System.out.println("The Product you selected is:");
         System.out.println(product.StringIt());
         if (availableQte == 0) {
@@ -176,7 +176,7 @@ public class Client {
             }
             Purchase pur = new Purchase(product.getRef(), qte, product.getPrice());
             cart.AddPurchase(pur);
-            Inventory.ChangeQuantity(product.getRef(), availableQte - qte);
+            Inventory.ChangeProdQuantity(product.getRef(), availableQte - qte);
         }
         cin.close();
     }
