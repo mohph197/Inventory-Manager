@@ -5,12 +5,14 @@ import java.util.Scanner;
 import source.services.FileHandler;
 import source.services.Purchase;
 
-public abstract class Client {
+public class Client {
     private String id;
     private String name;
     private String surname;
     private String address;
     private String password;
+    private String directoryPath;
+    private Cart cart;
 
     public Client(String id, String name, String surname, String address, String password) {
         this.id = id;
@@ -18,12 +20,57 @@ public abstract class Client {
         this.surname = surname;
         this.address = address;
         this.password = password;
+        this.directoryPath = "./data/clients/"+id;
+        this.cart = new Cart(this);
+        FileHandler.Add("./data/clients/clients.txt", StringIt());
+        FileHandler.CreateDIR(directoryPath);
     }
 
     public String StringIt(){
 		String returned = this.id+"|"+this.name+"|"+this.surname+"|"+this.address+"|"+this.password;
 		return returned;
 	}
+
+    public static Client ObjectIt(String data) {
+        String[] dataArray = data.split("|");
+        return new Client(dataArray[0], dataArray[1], dataArray[2], dataArray[3], dataArray[4]);
+    }
+    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDirectoryPath() {
+        return directoryPath;
+    }
 
     public void ShowActions() {
         Scanner cin = new Scanner(System.in);
@@ -47,7 +94,7 @@ public abstract class Client {
                 ShowProducts(Inventory.GetProducts());
                 break;
             case 3:
-                Cart.ShowCart(id);
+                cart.ShowCart();
                 break;
             case 4:
                 CheckAccount();
@@ -127,8 +174,9 @@ public abstract class Client {
                 if (choice == 0) return;
                 qte = availableQte;
             }
-            Purchase pur = new Purchase(FileHandler.GenerateUID(2), qte, product.getPrice());
-            Cart.AddPurchase(pur);
+            Purchase pur = new Purchase(product.getRef(), qte, product.getPrice());
+            cart.AddPurchase(pur);
+            Inventory.ChangeQuantity(product.getRef(), availableQte - qte);
         }
         cin.close();
     }
