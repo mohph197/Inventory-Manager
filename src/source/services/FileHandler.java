@@ -93,6 +93,7 @@ public class FileHandler {
             fs.close();
             File tempFile = new File(tempPath);
             fs = new Scanner(tempFile);
+            ClearFile(path);
             while(fs.hasNextLine()) {
                 Add(path, fs.nextLine());
             }
