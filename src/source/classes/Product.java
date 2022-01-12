@@ -1,5 +1,7 @@
 package source.classes;
 
+import source.services.FileHandler;
+
 public class Product {
     private String name;
     private String category;
@@ -9,10 +11,10 @@ public class Product {
     private float price;
     
     
-	public  Product(String name, String category, String ref, String description, String specs, float price) {
+	public Product(String name, String category, String description, String specs, float price) {
 		this.name = name;
 		this.category = category;
-		this.ref = ref;
+		this.ref = FileHandler.GenerateUID(1);
 		this.description = description;
 		this.specs = specs;
 		this.price = price;
@@ -23,9 +25,11 @@ public class Product {
 		return returned;
 	}
 
-	public Product ObjectIt(String prod){
+	public static Product ObjectIt(String prod){
 		String[] ProductInfo = prod.split("|");
-		return new Product(ProductInfo[2],ProductInfo[1],ProductInfo[0], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
+		Product temp = new Product(ProductInfo[2],ProductInfo[1], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
+		temp.setRef(prod.split("|")[0]);
+		return temp;
 	}
 	
 	public String getName() {
