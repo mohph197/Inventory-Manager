@@ -9,7 +9,7 @@ public class Product {
     private float price;
     
     
-	public Product(String name, String category, String ref, String description, String specs, float price) {
+	public  Product(String name, String category, String ref, String description, String specs, float price) {
 		this.name = name;
 		this.category = category;
 		this.ref = ref;
@@ -21,6 +21,11 @@ public class Product {
 	public String StringIt(){
 		String returned = this.ref+"|"+this.category+"|"+this.name+"|"+this.description+"|"+this.specs+"|"+this.price;
 		return returned;
+	}
+
+	public Product ObjectIt(String prod){
+		String[] ProductInfo = prod.split("|");
+		return new Product(ProductInfo[2]),ProductInfo[1],ProductInfo[0], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
 	}
 	
 	public String getName() {
