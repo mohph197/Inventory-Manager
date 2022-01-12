@@ -122,7 +122,7 @@ public class FileHandler {
             Scanner fs = new Scanner(new File(path));
             String result = "";
             while (fs.hasNextLine()) {
-                result.concat('\n'+fs.nextLine());
+                result += '\n'+fs.nextLine();
             }
             return result;
         } catch (FileNotFoundException e) {
