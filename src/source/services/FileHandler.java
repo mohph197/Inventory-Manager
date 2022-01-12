@@ -109,9 +109,14 @@ public class FileHandler {
     public static String GenerateUID(int index) {
         try {
             Scanner fs = new Scanner(new File("./data/currentUID.txt"));
-            String line = fs.nextLine();
-            return String.valueOf(Integer.parseInt(line.split("|")[index]) + 1);
-        } catch (FileNotFoundException e) {
+            String[] line = fs.nextLine().split("|");
+            fs.close();
+            line[index] = String.valueOf(Integer.parseInt(line[index]) + 1);
+            FileWriter fw = new FileWriter("./data/currentUID.txt");
+            fw.write(line[0]+'|'+line[1]+'|'+line[2]);
+            fw.close();
+            return line[index];
+        } catch (IOException e) {
             System.out.println(e.getMessage());
             return null;
         }
