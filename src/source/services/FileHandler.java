@@ -116,4 +116,19 @@ public class FileHandler {
             return null;
         }
     }
+
+    public static String GetContent(String path) {
+        try {
+            Scanner fs = new Scanner(new File(path));
+            String result = "";
+            while (fs.hasNextLine()) {
+                result.concat('\n'+fs.nextLine());
+            }
+            return result;
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+    }
 }
