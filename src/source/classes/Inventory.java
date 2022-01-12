@@ -1,35 +1,70 @@
 package source.classes;
-// import java.util.logging.FileHandler;
+import java.util.Vector;
 import source.services.FileHandler;
 
 public class Inventory {
-    static void AddProduct(Product prod){
-        String str = prod.StringIt();
-        FileHandler.Add("./Data/Inventory.txt", str);
+    public final static String InventoryPath = "./data/inventory.txt";
 
+        public static boolean AddProduct(Product prod, int qte){
+        if(DoesExist(prod.getRef()) == null){
+            FileHandler.Add(InventoryPath, prod.StringIt()+"|"+qte);
+            return true;
+        }else return ChangeProdQuantity(prod.getRef(), qte);
     }
 
-    static void ChangeQuantity(String ref, int qte){
-        
+        public static boolean ChangeProdQuantity(String ref, int qte){
+        String temp = DoesExist(ref);
+        if(temp == null ) return false;
+        String temp1 = temp.replace(temp.split("|")[6], String.valueOf(qte));
+        FileHandler.ModifyData(InventoryPath, temp, temp1);
+        return true;
     }
 
-    static void ChangePrice(float price){
-
+        public static String DoesExist(String ref){
+        return FileHandler.GetDataByRef(InventoryPath, ref);
     }
 
-    static Product[] GetProducts(){
-
-        return new Product[0];
+        public static boolean ChangePrice(String ref, float price){
+        String temp = DoesExist(ref);
+        if(temp == null) return false;
+        String temp1 = temp.replace(temp.split("|")[5], String.valueOf(price));
+        FileHandler.ModifyData(InventoryPath, temp, temp1);
+        return true;
     }
 
-    static int GetQuantity(String ref){
+        static int AvailableQuantity(String ref){
+            String temp = DoesExist(ref);
+            return Integer.parseInt(temp.split("|")[6]);
+        }
 
-        return 0;
+        public static Product[] GetProducts(){
+        String temp = FileHandler.GetContent(InventoryPath);
+        String[] tempArray = temp.split("\n");
+        int size = tempArray.length;
+        Product[] result = new Product[size];
+        for(int i=0; i<size; i++){
+           result[i] = Product.ObjectIt(tempArray[i]);
+        }
+        return result;
     }
 
-    static Product[] SearchProduct(String method, String key) {
-        
-        return new Product[0];
+        public static String GetProdNameByRef(String ref){
+        if(DoesExist(ref) != null) return FileHandler.GetDataByRef(InventoryPath, ref).split("|")[2];
+        return null;
     }
-    
+
+        public static Product[] SearchProducts(String method, String key) {
+            Product[] temp = GetProducts();
+            Vector<Product> result = new Vector<Product>(); 
+            for (Product product : temp) {
+                String field = method == "name" ?product.getName()
+                            : method == "ref" ?product.getRef()
+                            : method == "desc" ?product.getDescription()
+                            : method == "spec" ?product.getSpecs()
+                            : null;
+                if (field == null) return null;
+                if (field.indexOf(key) != -1) result.addElement(product);
+            }
+            return (Product[])result.toArray();
+        }    
 }

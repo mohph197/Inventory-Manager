@@ -25,10 +25,10 @@ public class Product {
 		return returned;
 	}
 
-	public static Product ObjectIt(String prod){
-		String[] ProductInfo = prod.split("|");
+	public static Product ObjectIt(String data){
+		String[] ProductInfo = data.split("|");
 		Product temp = new Product(ProductInfo[2],ProductInfo[1], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
-		temp.setRef(prod.split("|")[0]);
+		temp.setRef(data.split("|")[0]);
 		return temp;
 	}
 	
