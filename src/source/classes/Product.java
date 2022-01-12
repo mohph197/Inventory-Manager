@@ -25,7 +25,7 @@ public class Product {
 
 	public Product ObjectIt(String prod){
 		String[] ProductInfo = prod.split("|");
-		return new Product(ProductInfo[2]),ProductInfo[1],ProductInfo[0], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
+		return new Product(ProductInfo[2],ProductInfo[1],ProductInfo[0], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
 	}
 	
 	public String getName() {
