@@ -2,23 +2,35 @@ package source.services;
 import java.time.LocalDate;
 
 public class Purchase {
-    private LocalDate date;
     private String ref;
+    private String refProd;
+    private LocalDate date;
     private int qte;
     private float price;
 
-
-    public Purchase(String ref, int qte, float price) {
-        this.date = LocalDate.now();
+    public Purchase(String ref, String refProd, LocalDate date, int qte, float price) {
         this.ref = ref;
+        this.refProd = refProd;
+        this.date = date;
+        this.qte = qte;
+        this.price = price;
+    }
+
+    public Purchase(String refProd, int qte, float price) {
+        this.date = LocalDate.now();
+        this.ref = FileHandler.GenerateUID(2);
         this.qte = qte;
         this.price = price;
     }
 
     public String StringIt(){
-        String returned = this.ref+"|"+this.date+"|"+this.qte+"|"+this.price;
+        String returned = this.ref+"|"+this.refProd+"|"+this.date+"|"+this.qte+"|"+this.price;
         return returned;
     }
 
-    
+    public static Purchase ObjectIt(String data) {
+        String[] dataArray = data.split("|");
+        return new Purchase(dataArray[0], dataArray[1], LocalDate.parse(dataArray[2]),
+                            Integer.parseInt(dataArray[3]), Float.parseFloat(dataArray[4]));
+    }
 }
