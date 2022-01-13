@@ -31,8 +31,29 @@ public class Purchase {
     }
 
     public static Purchase ObjectIt(String data) {
+        if (data == null) return null;
         String[] dataArray = data.split("|");
         return new Purchase(dataArray[0], dataArray[1], LocalDate.parse(dataArray[2]),
                             Integer.parseInt(dataArray[3]), Float.parseFloat(dataArray[4]));
+    }
+
+    public String getRef() {
+        return ref;
+    }
+
+    public String getRefProd() {
+        return refProd;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public int getQte() {
+        return qte;
+    }
+
+    public float getPrice() {
+        return price;
     }
 }
