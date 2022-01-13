@@ -22,8 +22,8 @@ public class Cart {
         float cost = 0;
         for (int i = 0; i < dataLines.length; i++) {
             String[] line = dataLines[i].split("|");
-            line[1] = Inventory.GetProdNameByRef(line[1]);
-            System.out.println((i+1)+"- "+line[0]+"|"+line[1]+"|"+line[2]+"|"+line[3]+"|"+line[4]);
+            dataLines[i] = dataLines[i].replace(line[1], Inventory.GetProdDataByRef(line[1]).split("|")[2]);
+            System.out.println((i+1)+"- "+dataLines[i]);
             cost += Float.parseFloat(line[4]) * Integer.parseInt(line[3]);
         }
         System.out.println("The cost is: "+cost);

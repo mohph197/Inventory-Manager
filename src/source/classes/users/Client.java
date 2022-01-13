@@ -59,7 +59,7 @@ public class Client extends User{
                 UseSelection(SearchProduct());
                 break;
             case 2:
-                UseSelection(ShowSelectProducts(Inventory.GetProducts()));
+                UseSelection(ShowSelectProducts(Inventory.GetAllProducts()));
                 break;
             case 3:
                 cart.ShowCart();
