@@ -79,12 +79,11 @@ public abstract class Inventory {
         Product[] temp = GetAllProducts();
         LinkedList<Product> result = new LinkedList<Product>(); 
         for (Product product : temp) {
-            String field = method == "name" ?product.getName()
-                    : method == "cat" ?product.getCategory()
-                    : method == "ref" ?product.getRef()
-                    : method == "desc" ?product.getDescription()
-                    : method == "spec" ?product.getSpecs()
-                    : null;
+            String field=method == "name" ?product.getName()
+                        :method == "ref" ?product.getRef()
+                        :method == "desc" ?product.getDescription()
+                        :method == "spec" ?product.getSpecs()
+                        :null;
             if (field == null) return null;
             if (field.indexOf(key) != -1) result.add(product);
             }

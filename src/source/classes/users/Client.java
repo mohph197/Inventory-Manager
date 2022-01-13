@@ -31,6 +31,7 @@ public class Client extends User{
     }
 
     public static Client ObjectIt(String data) throws ObjectDoesntExistException {
+        if (data == null) return null;
         String[] dataArray = data.split("|");
         return new Client(dataArray[0], dataArray[1], dataArray[2], dataArray[3], dataArray[4]);
     }
@@ -40,7 +41,7 @@ public class Client extends User{
     }
 
     @Override
-    public void ShowActions() {
+    protected void ShowActions() {
         try {
             Runtime.getRuntime().exec("cls");
         } catch (IOException e) {
@@ -49,7 +50,7 @@ public class Client extends User{
         Scanner cin = new Scanner(System.in);
         System.out.println("Choose an action:");
         System.out.println("1- Search for a product");
-        System.out.println("2- Show all available products");
+        System.out.println("2- Show available products");
         System.out.println("3- Check the cart");
         System.out.println("4- Check 'Loyalty' account");
         System.out.print("Choose a number: ");
@@ -59,7 +60,7 @@ public class Client extends User{
                 UseSelection(SearchProduct());
                 break;
             case 2:
-                UseSelection(ShowSelectProducts(Inventory.GetAllProducts()));
+                UseSelection(ShowSelectProducts(ChooseProductCategory()));
                 break;
             case 3:
                 cart.ShowCart();
@@ -75,7 +76,8 @@ public class Client extends User{
         cin.close();
     }
 
-    private void UseSelection(Product product) {
+    @Override
+    protected void UseSelection(Product product) {
         if (product == null) return;
         int availableQte = Inventory.AvailableQuantity(product.getRef());
         Scanner cin = new Scanner(System.in);
@@ -84,6 +86,11 @@ public class Client extends User{
         System.out.print("Choose a number: ");
         int choice = cin.nextInt();
         if (choice == 1) {
+            if (availableQte == 0) {
+                System.out.println("Product isn't available right now");
+                cin.close();
+                return;
+            }
             System.out.println("How much do you want?: ");
             int qte = cin.nextInt();
             if (qte > availableQte) {

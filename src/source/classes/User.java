@@ -57,7 +57,8 @@ public abstract class User implements Storable{
         this.address = address;
     }
 
-    public abstract void ShowActions();
+    protected abstract void ShowActions();
+    protected abstract void UseSelection(Product product);
 
     public String StringIt() {
 		String returned = this.id+"|"+this.name+"|"+this.surname+"|"+this.address+"|"+this.password;
@@ -65,6 +66,11 @@ public abstract class User implements Storable{
 	}
 
     protected Product SearchProduct() {
+        try {
+            Runtime.getRuntime().exec("cls");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Scanner cin = new Scanner(System.in);
         System.out.println("Do you want to search by:");
         System.out.println("1- by name   2- by reference   3- by description   4- by specs");
@@ -88,6 +94,11 @@ public abstract class User implements Storable{
     }
 
     protected Product ShowSelectProducts(Product[] products) {
+        try {
+            Runtime.getRuntime().exec("cls");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Scanner cin = new Scanner(System.in);
         int choice;
         for (int i = 0; i < products.length; i++) {
@@ -115,5 +126,24 @@ public abstract class User implements Storable{
         System.out.println(product.StringIt());
         cin.close();
         return product;
+    }
+
+    protected Product[] ChooseProductCategory() {
+        try {
+            Runtime.getRuntime().exec("cls");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scanner cin = new Scanner(System.in);
+        System.out.println("Choose a category:");
+        System.out.println("1- Informatique et Mobiles   2- Electromenager   3- Kits Solaires   4- All");
+        System.out.print("Choose a number: ");
+        int choice = cin.nextInt();
+        cin.close();
+        return   choice == 1 ?Inventory.GetProductsByCategroy("mi")
+                :choice == 2 ?Inventory.GetProductsByCategroy("em")
+                :choice == 3 ?Inventory.GetProductsByCategroy("ks")
+                :choice == 4 ?Inventory.GetAllProducts()
+                :null;
     }
 }

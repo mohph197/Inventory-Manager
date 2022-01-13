@@ -35,6 +35,7 @@ public class Product {
 	}
 
 	public static Product ObjectIt(String data){
+		if (data == null) return null;
 		String[] ProductInfo = data.split("|");
 		Product temp = new Product(ProductInfo[2],ProductInfo[1], ProductInfo[0], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
 		return temp;
