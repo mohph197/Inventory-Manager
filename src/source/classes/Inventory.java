@@ -1,6 +1,5 @@
 package source.classes;
 import java.util.LinkedList;
-import java.util.Vector;
 import source.services.FileHandler;
 
 public class Inventory {
