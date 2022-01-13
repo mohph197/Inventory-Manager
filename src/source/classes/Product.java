@@ -19,6 +19,15 @@ public class Product {
 		this.specs = specs;
 		this.price = price;
 	}
+
+	public Product(String name, String category, String ref, String description, String specs, float price) {
+		this.name = name;
+		this.category = category;
+		this.ref = ref;
+		this.description = description;
+		this.specs = specs;
+		this.price = price;
+	}
 	
 	public String StringIt(){
 		String returned = this.ref+"|"+this.category+"|"+this.name+"|"+this.description+"|"+this.specs+"|"+this.price;
@@ -27,8 +36,7 @@ public class Product {
 
 	public static Product ObjectIt(String data){
 		String[] ProductInfo = data.split("|");
-		Product temp = new Product(ProductInfo[2],ProductInfo[1], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
-		temp.setRef(data.split("|")[0]);
+		Product temp = new Product(ProductInfo[2],ProductInfo[1], ProductInfo[0], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
 		return temp;
 	}
 	
