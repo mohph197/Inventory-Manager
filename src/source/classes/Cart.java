@@ -1,7 +1,7 @@
 package source.classes;
 
+import source.classes.users.Client;
 import source.services.FileHandler;
-import source.services.Purchase;
 
 public class Cart {
     private Client client;

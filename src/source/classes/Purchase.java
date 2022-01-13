@@ -1,5 +1,7 @@
-package source.services;
+package source.classes;
 import java.time.LocalDate;
+
+import source.services.FileHandler;
 
 public class Purchase {
     private String ref;
