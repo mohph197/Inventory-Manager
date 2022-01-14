@@ -7,15 +7,12 @@ import source.classes.users.Client;
 public class App {
     static Scanner cin = new Scanner(System.in);
     public static void main(String[] args) {
+        ClearConsole();
         System.out.println("Hello please specify what kind of user you are:");
         System.out.println("1- Agent          2- Client");
         System.out.print("Choose a number: ");
         int choice = cin.nextInt();
-        try {
-            Runtime.getRuntime().exec("cls");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        ClearConsole();
         if (choice == 1) GotoAgent();
         else GotoClient();
         cin.close();
@@ -36,5 +33,13 @@ public class App {
     }
     static Client SignUp(Character type) {
         return null;
+    }
+
+    public static void ClearConsole() {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (InterruptedException | IOException e) {
+            System.out.println("Error Clearing The console");
+        }
     }
 }

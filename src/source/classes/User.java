@@ -1,8 +1,7 @@
 package source.classes;
-
-import java.io.IOException;
 import java.util.Scanner;
 
+import source.App;
 import source.interfaces.Storable;
 import source.services.FileHandler;
 
@@ -66,21 +65,13 @@ public abstract class User implements Storable{
 	}
 
     protected Product SearchProduct() {
-        try {
-            Runtime.getRuntime().exec("cls");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        App.ClearConsole();
         Scanner cin = new Scanner(System.in);
         System.out.println("Do you want to search by:");
         System.out.println("1- by name   2- by reference   3- by description   4- by specs");
         System.out.print("Choose a number: ");
         int choice = cin.nextInt();
-        try {
-            Runtime.getRuntime().exec("cls");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        App.ClearConsole();
         System.out.print("Enter search key: ");
         String searchKey = cin.nextLine();
         cin.close();
@@ -94,11 +85,7 @@ public abstract class User implements Storable{
     }
 
     protected Product ShowSelectProducts(Product[] products) {
-        try {
-            Runtime.getRuntime().exec("cls");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        App.ClearConsole();
         Scanner cin = new Scanner(System.in);
         int choice;
         for (int i = 0; i < products.length; i++) {
@@ -111,11 +98,7 @@ public abstract class User implements Storable{
             cin.close();
             return null;
         }
-        try {
-            Runtime.getRuntime().exec("cls");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        App.ClearConsole();
         if (choice >= products.length) {
             System.out.println("Wrong Number!");
             cin.close();
@@ -129,11 +112,7 @@ public abstract class User implements Storable{
     }
 
     protected Product[] ChooseProductCategory() {
-        try {
-            Runtime.getRuntime().exec("cls");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        App.ClearConsole();
         Scanner cin = new Scanner(System.in);
         System.out.println("Choose a category:");
         System.out.println("1- Informatique et Mobiles   2- Electromenager   3- Kits Solaires   4- All");

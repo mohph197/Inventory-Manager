@@ -1,7 +1,7 @@
 package source.classes.users;
-import java.io.*;
 import java.util.Scanner;
 
+import source.App;
 import source.classes.Cart;
 import source.classes.Inventory;
 import source.classes.Product;
@@ -42,11 +42,7 @@ public class Client extends User{
 
     @Override
     public void ShowActions() {
-        try {
-            Runtime.getRuntime().exec("cls");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        App.ClearConsole();
         Scanner cin = new Scanner(System.in);
         System.out.println("Choose an action:");
         System.out.println("1- Search for a product");
