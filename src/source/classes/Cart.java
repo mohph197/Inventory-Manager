@@ -12,6 +12,15 @@ public class Cart {
         this.filePath = client.getDirectoryPath()+"/cart.txt";
     }
 
+    public Purchase[] GetCartPurchases() {
+        String[] data = FileHandler.GetContent(filePath).split("\n");
+        Purchase[] purchases = new Purchase[data.length];
+        for (int i = 0; i < data.length; i++) {
+            purchases[i] = Purchase.ObjectIt(data[i]);
+        }
+        return purchases;
+    }
+
     public void ShowCart() {
         String data = FileHandler.GetContent(filePath);
         if (data == null || data.equals("")) {

@@ -4,6 +4,7 @@ import java.util.Scanner;
 import source.App;
 import source.classes.Cart;
 import source.classes.Inventory;
+import source.classes.LoyaltyAccount;
 import source.classes.Product;
 import source.classes.Purchase;
 import source.classes.User;
@@ -62,7 +63,7 @@ public class Client extends User{
                 cart.ShowCart();
                 break;
             case 4:
-                CheckAccount();
+                new LoyaltyAccount(this).ShowDetails();
                 break;
             default:
                 System.out.println("Wrong Number!");
@@ -106,5 +107,7 @@ public class Client extends User{
         cin.close();
     }
 
-    private void CheckAccount() {}
+    public void RecordPurchase(Purchase purchase) {
+        FileHandler.Add(directoryPath+"/purchases.txt", purchase.StringIt());
+    }
 }
