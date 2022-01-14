@@ -48,9 +48,7 @@ public abstract class Authentication {
             System.out.println("Would you like to retry :\n 1- Yes    0- No");
             int in = sin.nextInt();
             sin.close();
-            if(in == 1)SignIn(type);
-            if(in == 0) return null;
-            sin.close();
+            if(in == 1)return SignIn(type);
             return null;
         }
         sin.close();
