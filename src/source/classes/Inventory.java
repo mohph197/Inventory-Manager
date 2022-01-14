@@ -93,6 +93,7 @@ public abstract class Inventory {
             }
         return (Product[])result.toArray();
     }
+    
     public static String getProdPath(String ref){
         String  temp = FileHandler.GetDataByRef(inventoryPath + "mi.txt", ref);
         String temp1 = FileHandler.GetDataByRef(inventoryPath + "em.txt", ref);

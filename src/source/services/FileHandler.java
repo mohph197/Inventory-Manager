@@ -136,4 +136,11 @@ public class FileHandler {
         }
         
     }
-}
+
+    public static String ReturnLine(String path, String key){
+        String[] temp = GetContent(path).split("\n");
+        for (String string : temp)
+            if(string.contains(key) == true) return string;
+        return null;
+        }
+    }
