@@ -10,7 +10,7 @@ public abstract class Authentication {
     public static final String agentsPath = "./data/users/agents.txt";
     public static final String managersPath = "./data/users/managers.txt";
 
-    public static User SignIn(char type) throws ObjectDoesntExistException{
+    public static User SignIn(char type) {
         App.ClearConsole();
         Scanner sin = new Scanner(System.in);
         System.out.println("Enter your Address : ");
@@ -35,9 +35,14 @@ public abstract class Authentication {
             }
             System.out.println("Welcome !");
             sin.close();
-            if(type == 'a') return new  Agent(creds[0],creds[1],creds[2],creds[3], creds[4]);
-            if(type == 'c') return new Client(creds[0],creds[1],creds[2],creds[3], creds[4]);
-            if(type == 'm') return new Manager(creds[0],creds[1],creds[2],creds[3], creds[4]);
+            try {
+                if(type == 'a') return new  Agent(creds[0],creds[1],creds[2],creds[3], creds[4]);
+                if(type == 'c') return new Client(creds[0],creds[1],creds[2],creds[3], creds[4]);
+                if(type == 'm') return new Manager(creds[0],creds[1],creds[2],creds[3], creds[4]);
+            } catch (ObjectDoesntExistException e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
         }else{
             System.out.println("Invalid Address or User doesn't exist");
             System.out.println("Would you like to retry :\n 1- Yes    0- No");
