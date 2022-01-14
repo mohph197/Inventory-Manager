@@ -113,7 +113,7 @@ public class FileHandler {
             fs.close();
             line[index] = String.valueOf(Integer.parseInt(line[index]) + 1);
             FileWriter fw = new FileWriter("./data/currentUID.txt");
-            fw.write(line[0]+'|'+line[1]+'|'+line[2]);
+            fw.write(line[0]+" "+line[1]+" "+line[2]);
             fw.close();
             return line[index];
         } catch (IOException e) {
