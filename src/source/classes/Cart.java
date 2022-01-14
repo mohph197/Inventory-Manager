@@ -30,8 +30,8 @@ public class Cart {
         String[] dataLines = data.split("\n");
         float cost = 0;
         for (int i = 0; i < dataLines.length; i++) {
-            String[] line = dataLines[i].split("|");
-            dataLines[i] = dataLines[i].replace(line[1], Inventory.GetProdDataByRef(line[1]).split("|")[2]);
+            String[] line = dataLines[i].split(" ");
+            dataLines[i] = dataLines[i].replace(line[1], Inventory.GetProdDataByRef(line[1]).split(" ")[2]);
             System.out.println((i+1)+"- "+dataLines[i]);
             cost += Float.parseFloat(line[4]) * Integer.parseInt(line[3]);
         }

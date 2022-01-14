@@ -9,15 +9,15 @@ public abstract class Inventory {
     public static boolean AddProduct(Product prod, int qte){
         if(DoesExist(prod.getRef())) return
             ChangeProdQuantity(prod.getRef(), AvailableQuantity(prod.getRef()) + qte);
-        FileHandler.Add(inventoryPath+prod.getCategory()+".txt", prod.StringIt()+"|"+qte);
+        FileHandler.Add(inventoryPath+prod.getCategory()+".txt", prod.StringIt()+" "+qte);
         return true; 
     }
 
     public static boolean ChangeProdQuantity(String ref, int qte){
         String prodData = GetProdDataByRef(ref);
         if(prodData == null ) return false;
-        String newData = prodData.replace(prodData.split("|")[6], String.valueOf(qte));
-        FileHandler.ModifyData(inventoryPath+(prodData.split("|")[1])+".txt", prodData, newData);
+        String newData = prodData.replace(prodData.split(" ")[6], String.valueOf(qte));
+        FileHandler.ModifyData(inventoryPath+(prodData.split(" ")[1])+".txt", prodData, newData);
         return true;
     }
 
@@ -32,14 +32,14 @@ public abstract class Inventory {
     public static boolean ChangePrice(String ref, float price, String cat){
         String temp = GetProdDataByRef(ref);
         if(temp == null) return false;
-        String temp1 = temp.replace(temp.split("|")[5], String.valueOf(price));
+        String temp1 = temp.replace(temp.split(" ")[5], String.valueOf(price));
         FileHandler.ModifyData(inventoryPath+cat+".txt", temp, temp1);
         return true;
     }
 
     public static int AvailableQuantity(String ref){
             String temp = GetProdDataByRef(ref);
-            return Integer.parseInt(temp.split("|")[6]);
+            return Integer.parseInt(temp.split(" ")[6]);
         }
 
     public static Product[] GetProductsByCategroy(String cat){

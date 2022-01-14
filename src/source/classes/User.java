@@ -60,7 +60,7 @@ public abstract class User implements Storable{
     protected abstract void UseSelection(Product product);
 
     public String StringIt() {
-		String returned = this.id+"|"+this.name+"|"+this.surname+"|"+this.address+"|"+this.password;
+		String returned = this.id+" "+this.name+" "+this.surname+" "+this.address+" "+this.password;
 		return returned;
 	}
 

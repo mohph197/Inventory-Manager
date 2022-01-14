@@ -33,7 +33,7 @@ public class Client extends User{
 
     public static Client ObjectIt(String data) throws ObjectDoesntExistException {
         if (data == null) return null;
-        String[] dataArray = data.split("|");
+        String[] dataArray = data.split(" ");
         return new Client(dataArray[0], dataArray[1], dataArray[2], dataArray[3], dataArray[4]);
     }
 

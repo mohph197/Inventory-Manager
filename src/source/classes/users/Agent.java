@@ -1,8 +1,11 @@
 package source.classes.users;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 import source.App;
+import source.classes.LoyaltyAccount;
+import source.classes.Cart;
 import source.classes.Inventory;
 import source.classes.Product;
 import source.classes.Purchase;
@@ -27,7 +30,7 @@ public class Agent extends User{
     }
 
     public String StringIt() {
-		String returned = this.id+"|"+this.name+"|"+this.surname+"|"+this.address+"|"+this.password;
+		String returned = this.id+" "+this.name+" "+this.surname+" "+this.address+" "+this.password;
 		return returned;
 	}
 
@@ -77,14 +80,10 @@ public class Agent extends User{
         App.ClearConsole();
         Scanner cin = new Scanner(System.in);
         boolean shouldAdd = true;
-        int choice;
+        int choice = 0;
         float currentPrice = 0;
         LinkedList<Purchase> purchases = new LinkedList<Purchase>();
-        System.out.println("Please Sign In/Sign Up the client to begin:");
-        System.out.println("1- Sign in          2- Sign Up");
-        System.out.print("Choose a number: ");
-        choice = cin.nextInt();
-        Client client = choice == 1 ?(Client)Authentication.SignIn('c') :(Client)Authentication.SignUp('c');
+        Client client = GetClient();
         if (client == null) {
             System.out.println("Authentication Error!");
             cin.close();
@@ -136,8 +135,8 @@ public class Agent extends User{
         System.out.println("Here is your order:");
         System.out.println("The Price: "+currentPrice);
         for (int i = 0; i < purchases2.length; i++) {
-            System.out.println((i+1)+"- "+Inventory.GetProdDataByRef(purchases2[i].getRefProd()).split("|")[2]
-                                +"|"+purchases2[i].StringIt());
+            System.out.println((i+1)+"- "+Inventory.GetProdDataByRef(purchases2[i].getRefProd()).split(" ")[2]
+                                +" "+purchases2[i].StringIt());
         }
         System.out.println("1- Confirm   2- Cancel");
         System.out.print("choose a number: ");
@@ -149,20 +148,68 @@ public class Agent extends User{
     }
 
     private void ValidateCart() {
-        
+        Client client = GetClient();
+        if (client == null) {
+            System.out.println("Authentication Error!");
+            return;
+        }
+        Cart cart = new Cart(client);
+        Scanner cin = new Scanner(System.in);
+        cart.ShowCart();
+        System.out.print("Validate? (0: no, 1: yes): ");
+        if (cin.nextInt() == 1) ExecutePurchases(cart.GetCartPurchases(), client);
+        cin.close();
     }
 
     private void MakeRefund() {
-        
+        Client client = GetClient();
+        if (client == null) {
+            System.out.println("Authentication Error!");
+            return;
+        }
+        App.ClearConsole();
+        Scanner cin = new Scanner(System.in);
+        System.out.print("Enter your purchase reference: ");
+        String ref = cin.nextLine();
+        String clientPurchaseStr = FileHandler.GetDataByRef(client.getDirectoryPath()+"/purchases.txt", ref);
+        if (clientPurchaseStr == null) {
+            System.out.println("Purchase doesn't exist");
+            cin.close();
+            return;
+        }
+        Purchase clientPurchase = Purchase.ObjectIt(clientPurchaseStr);
+        System.out.println("Here is the price to return: " + clientPurchase.getPrice() * clientPurchase.getQte());
+
+        cin.close();
     }
 
     private void ExecutePurchases(Purchase[] purchases, Client client) {
+        Scanner cin = new Scanner(System.in);
+        LoyaltyAccount account = new LoyaltyAccount(client);
+        HashSet<String> categories = new HashSet<String>();
+        float price = 0;
+        System.out.println("Do you want a discount? (0: no, 1: yes): ");
+        boolean shouldDiscount = cin.nextInt() == 1;
+        for (Purchase purchase : purchases) {
+            Product prod = Inventory.GetProdByRef(purchase.getRefProd());
+            Inventory.ChangeProdQuantity(prod.getRef(), Inventory.AvailableQuantity(prod.getRef()) - purchase.getQte());
+            if (!shouldDiscount) account.RecordPurchase(purchase);
+            client.RecordPurchase(purchase);
+            categories.add(prod.getCategory());
+            price += purchase.getPrice() * purchase.getQte();
+        }
+        if (shouldDiscount) System.out.println("The new price is: "+ (price - account.GetDiscount((String[])categories.toArray())));
+        cin.close();
+    }
 
-        // float miCost, emCost, ksCost;
-        // for (Purchase purchase : purchases) {
-        //     Product prod = Inventory.GetProdByRef(purchase.getRefProd());
-        //     Inventory.ChangeProdQuantity(prod.getRef(), Inventory.AvailableQuantity(prod.getRef()) - purchase.getQte());
-            
-        // }
+    public Client GetClient() {
+        Scanner cin = new Scanner(System.in);
+        int choice;
+        System.out.println("Please Sign In/Sign Up the client to begin:");
+        System.out.println("1- Sign in          2- Sign Up");
+        System.out.print("Choose a number: ");
+        choice = cin.nextInt();
+        cin.close();
+        return choice == 1 ?(Client)Authentication.SignIn('c') :(Client)Authentication.SignUp('c');
     }
 }

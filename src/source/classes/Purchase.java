@@ -26,13 +26,13 @@ public class Purchase {
     }
 
     public String StringIt(){
-        String returned = this.ref+"|"+this.refProd+"|"+this.date+"|"+this.qte+"|"+this.price;
+        String returned = this.ref+" "+this.refProd+" "+this.date+" "+this.qte+" "+this.price;
         return returned;
     }
 
     public static Purchase ObjectIt(String data) {
         if (data == null) return null;
-        String[] dataArray = data.split("|");
+        String[] dataArray = data.split(" ");
         return new Purchase(dataArray[0], dataArray[1], LocalDate.parse(dataArray[2]),
                             Integer.parseInt(dataArray[3]), Float.parseFloat(dataArray[4]));
     }

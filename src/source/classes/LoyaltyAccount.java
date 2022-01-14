@@ -14,7 +14,7 @@ public class LoyaltyAccount {
     public boolean RecordPurchase(Purchase pur){
         String prodCat = Inventory.GetProdByRef(pur.getRefProd()).getCategory();
         String oldData = FileHandler.GetDataByRef(clientAccountPath, prodCat);
-        String oldPrice = oldData.split("|")[1];
+        String oldPrice = oldData.split(" ")[1];
         String newData = oldData.replace(oldPrice, String.valueOf(Float.parseFloat(oldPrice) + pur.getPrice() * pur.getQte()));
         return FileHandler.ModifyData(clientAccountPath, oldData, newData);
     }
@@ -22,10 +22,10 @@ public class LoyaltyAccount {
     public void ShowDetails() {
         String[] data = FileHandler.GetContent(clientAccountPath).split("\n");
         for (int i = 0; i < 3; i++) {
-            float price = Float.parseFloat(data[i].split("|")[1]);
-            float discount = price* (data[i].split("|")[0] == "mi" ?5
-                                    :data[i].split("|")[0] == "em" ?10
-                                    :data[i].split("|")[0] == "ks" ?15
+            float price = Float.parseFloat(data[i].split(" ")[1]);
+            float discount = price* (data[i].split(" ")[0] == "mi" ?5
+                                    :data[i].split(" ")[0] == "em" ?10
+                                    :data[i].split(" ")[0] == "ks" ?15
                                     :0) / 100.0f;
             System.out.println((i+1)+"- "+categoriesDetailed[i]+": "+price+" --> "+discount);
         }
@@ -35,7 +35,7 @@ public class LoyaltyAccount {
         float discount = 0;
         for (String cat : categories) {
             String oldData = FileHandler.GetDataByRef(clientAccountPath, cat);
-            float oldPrice = Float.parseFloat(oldData.split("|")[1]);
+            float oldPrice = Float.parseFloat(oldData.split(" ")[1]);
             discount += oldPrice *  (cat == "mi" ?5
                                     :cat == "em" ?10
                                     :cat == "ks" ?15

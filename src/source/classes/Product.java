@@ -30,13 +30,13 @@ public class Product {
 	}
 	
 	public String StringIt(){
-		String returned = this.ref+"|"+this.category+"|"+this.name+"|"+this.description+"|"+this.specs+"|"+this.price;
+		String returned = this.ref+" "+this.category+" "+this.name+" "+this.description+" "+this.specs+" "+this.price;
 		return returned;
 	}
 
 	public static Product ObjectIt(String data){
 		if (data == null) return null;
-		String[] ProductInfo = data.split("|");
+		String[] ProductInfo = data.split(" ");
 		Product temp = new Product(ProductInfo[2],ProductInfo[1], ProductInfo[0], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
 		return temp;
 	}

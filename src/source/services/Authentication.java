@@ -18,7 +18,7 @@ public abstract class Authentication {
         String[] creds = FileHandler.ReturnLine(type == 'c' ?clientsPath
                                               : type == 'a' ?agentsPath
                                               : type == 'm' ?managersPath
-                                              : null , adr ).split("|");
+                                              : null , adr ).split(" ");
         if(creds[3].contains(adr) == true){
             String pass;
             int ctr = 3;

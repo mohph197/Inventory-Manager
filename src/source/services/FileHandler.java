@@ -71,7 +71,7 @@ public class FileHandler {
             Scanner fs = new Scanner(new File(path));
             while (fs.hasNextLine()) {
                 String line = fs.nextLine();
-                if (line.split("|")[0].equals(ref)) return line;
+                if (line.split(" ")[0].equals(ref)) return line;
             }
             fs.close();
             return null;
@@ -109,7 +109,7 @@ public class FileHandler {
     public static String GenerateUID(int index) {
         try {
             Scanner fs = new Scanner(new File("./data/currentUID.txt"));
-            String[] line = fs.nextLine().split("|");
+            String[] line = fs.nextLine().split(" ");
             fs.close();
             line[index] = String.valueOf(Integer.parseInt(line[index]) + 1);
             FileWriter fw = new FileWriter("./data/currentUID.txt");
@@ -142,5 +142,29 @@ public class FileHandler {
         for (String string : temp)
             if(string.contains(key) == true) return string;
         return null;
+    }
+
+    public static boolean DeleteDataByRef(String path, String ref) {
+        try {
+            String tempPath = path.replace(".txt", "_temp.txt");
+            Scanner fs = new Scanner(new File(path));
+            while (fs.hasNextLine()) {
+                String line = fs.nextLine();
+                if (!line.split(" ")[0].equals(ref)) Add(tempPath, line);
+            }
+            fs.close();
+            File tempFile = new File(tempPath);
+            fs = new Scanner(tempFile);
+            ClearFile(path);
+            while(fs.hasNextLine()) {
+                Add(path, fs.nextLine());
+            }
+            fs.close();
+            tempFile.delete();
+            return true;
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
     }
+}
