@@ -67,12 +67,16 @@ public abstract class Inventory {
         return result;
     }
 
+
     public static String GetProdDataByRef(String ref){
         for (String cat : categories) {
             String prodStr = FileHandler.GetDataByRef(InventoryPath+cat+".txt", ref);
             if (prodStr!=null) return prodStr;
         }
         return null;
+    }
+    public static Product GetProdByRef(String ref){
+        return Product.ObjectIt(GetProdDataByRef(ref));
     }
 
     public static Product[] SearchProducts(String method, String key) {
@@ -88,5 +92,14 @@ public abstract class Inventory {
             if (field.indexOf(key) != -1) result.add(product);
             }
         return (Product[])result.toArray();
+    }
+    public static String getProdPath(String ref){
+        String  temp = FileHandler.GetDataByRef("./data/inventory/mi.txt", ref);
+        String temp1 = FileHandler.GetDataByRef("./data/inventory/em.txt", ref);
+        String temp2 = FileHandler.GetDataByRef("./data/inventory/ks.txt", ref);
+        if (temp != null) return temp;
+        if (temp1 != null) return temp1;
+        if (temp2 != null) return temp2;
+        return null;
     }
 }
