@@ -179,7 +179,9 @@ public class Agent extends User{
         }
         Purchase clientPurchase = Purchase.ObjectIt(clientPurchaseStr);
         System.out.println("Here is the price to return: " + clientPurchase.getPrice() * clientPurchase.getQte());
-
+        FileHandler.DeleteDataByRef(client.getDirectoryPath()+"/purchases.txt", ref);
+        String prodRef = clientPurchase.getRefProd();
+        Inventory.ChangeProdQuantity(prodRef, Inventory.AvailableQuantity(prodRef) + clientPurchase.getQte());
         cin.close();
     }
 
