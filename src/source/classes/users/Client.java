@@ -41,7 +41,7 @@ public class Client extends User{
     }
 
     @Override
-    protected void ShowActions() {
+    public void ShowActions() {
         try {
             Runtime.getRuntime().exec("cls");
         } catch (IOException e) {

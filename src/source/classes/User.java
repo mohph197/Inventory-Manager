@@ -57,7 +57,7 @@ public abstract class User implements Storable{
         this.address = address;
     }
 
-    protected abstract void ShowActions();
+    public abstract void ShowActions();
     protected abstract void UseSelection(Product product);
 
     public String StringIt() {
