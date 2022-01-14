@@ -46,7 +46,7 @@ public abstract class Authentication {
         }else{
             System.out.println("Invalid Address or User doesn't exist");
             System.out.println("Would you like to retry :\n 1- Yes    0- No");
-            int in = cin.nextInt();
+            int in = cin.nextInt();cin.nextLine();
             cin.close();
             if(in == 1) return SignIn(type);
             return null;

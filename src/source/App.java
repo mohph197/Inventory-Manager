@@ -13,7 +13,7 @@ public class App {
             System.out.println("Hello, please specify which kind of user you are:");
             System.out.println("1- Agent   2- Client   3- Agent   0- Exit");
             System.out.print("Choose a number: ");
-            int choice = cin.nextInt();
+            int choice = cin.nextInt();cin.nextLine();
             ClearConsole();
             if (choice == 0) break;
             if (choice == 1) GotoAgent();
@@ -30,7 +30,7 @@ public class App {
         System.out.println("Welcome!");
         System.out.println("1- Sign in   2- Sign Up");
         System.out.print("Choose a number: ");
-        int choice = cin.nextInt();
+        int choice = cin.nextInt();cin.nextLine();
         Client client = choice == 1 ?(Client)Authentication.SignIn('c') :(Client)Authentication.SignUp('c');
         if (client == null) return;
         client.ShowActions();

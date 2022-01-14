@@ -70,7 +70,7 @@ public abstract class User implements Storable{
         System.out.println("Do you want to search by:");
         System.out.println("1- by name   2- by reference   3- by description   4- by specs");
         System.out.print("Choose a number: ");
-        int choice = cin.nextInt();
+        int choice = cin.nextInt();cin.nextLine();
         App.ClearConsole();
         System.out.print("Enter search key: ");
         String searchKey = cin.nextLine();
@@ -93,7 +93,7 @@ public abstract class User implements Storable{
         }
         System.out.println("0- Go Back");
         System.out.print("Choose a number: ");
-        choice = cin.nextInt();
+        choice = cin.nextInt();cin.nextLine();
         if (choice == 0) {
             cin.close();
             return null;
@@ -117,7 +117,7 @@ public abstract class User implements Storable{
         System.out.println("Choose a category:");
         System.out.println("1- Informatique et Mobiles   2- Electromenager   3- Kits Solaires   4- All");
         System.out.print("Choose a number: ");
-        int choice = cin.nextInt();
+        int choice = cin.nextInt();cin.nextLine();
         cin.close();
         return   choice == 1 ?Inventory.GetProductsByCategroy("mi")
                 :choice == 2 ?Inventory.GetProductsByCategroy("em")

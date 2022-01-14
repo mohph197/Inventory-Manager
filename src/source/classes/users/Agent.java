@@ -45,7 +45,7 @@ public class Agent extends User{
         System.out.println("4- Initiate a new purchase");
         System.out.println("5- Make a refund");
         System.out.print("Choose a number: ");
-        int choice = cin.nextInt();
+        int choice = cin.nextInt();cin.nextLine();
         switch (choice) {
             case 1:
                 UseSelection(SearchProduct());
@@ -101,14 +101,14 @@ public class Agent extends User{
                 System.out.println(chosen.StringIt());
                 System.out.println("1- Add   2- Skip");
                 System.out.print("choose a number: ");
-                choice = cin.nextInt();
+                choice = cin.nextInt();cin.nextLine();
                 if (choice == 1) {
                     System.out.println("How much do you want?: ");
-                    int qte = cin.nextInt();
+                    int qte = cin.nextInt();cin.nextLine();
                     if (qte > availableQte) {
                         System.out.println("This quantity is unavailable!");
                         System.out.println("Would you like to order "+availableQte+" instead?\n(0: no, 1: yes): ");
-                        choice = cin.nextInt();
+                        choice = cin.nextInt();cin.nextLine();
                         if (choice == 0) {
                             cin.close();
                             return;
@@ -123,7 +123,7 @@ public class Agent extends User{
             }
             System.out.println("1- Add another one   2- Stop   0- Cancel");
             System.out.print("choose a number: ");
-            choice = cin.nextInt();
+            choice = cin.nextInt();cin.nextLine();
             if (choice == 0 || choice == 2) shouldAdd = false;
         }
         if (choice == 0) {
@@ -140,7 +140,7 @@ public class Agent extends User{
         }
         System.out.println("1- Confirm   2- Cancel");
         System.out.print("choose a number: ");
-        choice = cin.nextInt();
+        choice = cin.nextInt();cin.nextLine();
         if (choice == 1) ExecutePurchases(purchases2, client);
         cin.close();
         purchases.clear();
@@ -158,6 +158,7 @@ public class Agent extends User{
         cart.ShowCart();
         System.out.print("Validate? (0: no, 1: yes): ");
         if (cin.nextInt() == 1) ExecutePurchases(cart.GetCartPurchases(), client);
+        cin.nextLine();
         cin.close();
     }
 
@@ -192,6 +193,7 @@ public class Agent extends User{
         float price = 0;
         System.out.println("Do you want a discount? (0: no, 1: yes): ");
         boolean shouldDiscount = cin.nextInt() == 1;
+        cin.nextLine();
         for (Purchase purchase : purchases) {
             Product prod = Inventory.GetProdByRef(purchase.getRefProd());
             Inventory.ChangeProdQuantity(prod.getRef(), Inventory.AvailableQuantity(prod.getRef()) - purchase.getQte());
@@ -210,7 +212,7 @@ public class Agent extends User{
         System.out.println("Please Sign In/Sign Up the client to begin:");
         System.out.println("1- Sign in          2- Sign Up");
         System.out.print("Choose a number: ");
-        choice = cin.nextInt();
+        choice = cin.nextInt();cin.nextLine();
         cin.close();
         return choice == 1 ?(Client)Authentication.SignIn('c') :(Client)Authentication.SignUp('c');
     }

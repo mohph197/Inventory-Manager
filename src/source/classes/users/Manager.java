@@ -34,13 +34,13 @@ public class Manager extends Agent{
         if(Inventory.getProdPath(prod.getRef()) != null){
             System.out.println("Product Already Exists !");
             System.out.println("Would you like to retry :\n 1- Yes    0- No");
-            int in = cin.nextInt();
+            int in = cin.nextInt();cin.nextLine();
             cin.close();
             if(in == 1) return AddProduct();
             return false;
         }
         System.out.println("Please enter the quantity of the Product : ");
-        int in = cin.nextInt();
+        int in = cin.nextInt();cin.nextLine();
         cin.close();
         return Inventory.AddProduct(prod, in);
     }
@@ -53,15 +53,15 @@ public class Manager extends Agent{
         String cat = Inventory.getProdPath(ref);
         if(cat == null){
             System.out.println("Product doesn't exist !\n would you like to retry ? \n 1- Yes   0- No");
-            int in = cin.nextInt();
+            int in = cin.nextInt();cin.nextLine();
             cin.close();
             if(in == 1) return ChangePrice();
         }
         System.out.println("Enter the new Price");
-        float price = cin.nextFloat();
+        float price = cin.nextFloat();cin.nextLine();
         while(price <= 0){
             System.out.println("Cannot enter a negative price !\n try again :");
-            price = cin.nextFloat();
+            price = cin.nextFloat();cin.nextLine();
         }
         cin.close();
         return Inventory.ChangePrice(ref, price, cat);

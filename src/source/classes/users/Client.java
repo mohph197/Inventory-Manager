@@ -51,7 +51,7 @@ public class Client extends User{
         System.out.println("3- Check the cart");
         System.out.println("4- Check 'Loyalty' account");
         System.out.print("Choose a number: ");
-        int choice = cin.nextInt();
+        int choice = cin.nextInt();cin.nextLine();
         switch (choice) {
             case 1:
                 UseSelection(SearchProduct());
@@ -81,7 +81,7 @@ public class Client extends User{
         System.out.println("Do you want to:");
         System.out.println("1- Add to Cart   0- Go Back");
         System.out.print("Choose a number: ");
-        int choice = cin.nextInt();
+        int choice = cin.nextInt();cin.nextLine();
         if (choice == 1) {
             if (availableQte == 0) {
                 System.out.println("Product isn't available right now");
@@ -89,11 +89,11 @@ public class Client extends User{
                 return;
             }
             System.out.println("How much do you want?: ");
-            int qte = cin.nextInt();
+            int qte = cin.nextInt();cin.nextLine();
             if (qte > availableQte) {
                 System.out.println("This quantity is unavailable!");
                 System.out.println("Would you like to order "+availableQte+" instead?\n(0: no, 1: yes): ");
-                choice = cin.nextInt();
+                choice = cin.nextInt();cin.nextLine();
                 if (choice == 0) {
                     cin.close();
                     return;
