@@ -37,13 +37,14 @@ public class Agent extends User{
     @Override
     public void ShowActions() {
         App.ClearConsole();
-        Scanner cin = new Scanner(System.in);
+        Scanner cin =  App.cin;
         System.out.println("Choose an action:");
         System.out.println("1- Search for a product details");
         System.out.println("2- Show available products");
         System.out.println("3- Validate a cart");
         System.out.println("4- Initiate a new purchase");
         System.out.println("5- Make a refund");
+        System.out.println("0- Exit");
         System.out.print("Choose a number: ");
         int choice = cin.nextInt();cin.nextLine();
         switch (choice) {
@@ -62,12 +63,15 @@ public class Agent extends User{
             case 5:
                 MakeRefund();
                 break;
+            case 0:
+                App.ClearConsole();
+                return;
             default:
                 System.out.println("Wrong Number!");
                 ShowActions();
                 break;
         }
-        cin.close();
+         
     }
 
     @Override
@@ -78,7 +82,7 @@ public class Agent extends User{
 
     private void InitPurchase() {
         App.ClearConsole();
-        Scanner cin = new Scanner(System.in);
+        Scanner cin =  App.cin;
         boolean shouldAdd = true;
         int choice = 0;
         float currentPrice = 0;
@@ -86,7 +90,7 @@ public class Agent extends User{
         Client client = GetClient();
         if (client == null) {
             System.out.println("Authentication Error!");
-            cin.close();
+             
             return;
         }
         while (shouldAdd) {
@@ -110,7 +114,7 @@ public class Agent extends User{
                         System.out.println("Would you like to order "+availableQte+" instead?\n(0: no, 1: yes): ");
                         choice = cin.nextInt();cin.nextLine();
                         if (choice == 0) {
-                            cin.close();
+                             
                             return;
                         }
                         qte = availableQte;
@@ -128,10 +132,14 @@ public class Agent extends User{
         }
         if (choice == 0) {
             purchases.clear();
-            cin.close();
+             
             return;
         }
-        Purchase[] purchases2 = (Purchase[])purchases.toArray();
+        // Purchase[] purchases2 = new Purchase[purchases.size()];
+        // for (int i = 0; i < purchases2.length; i++) {
+        //     purchases2[i] = purchases.get(i);
+        // }
+        Purchase[] purchases2 = purchases.toArray(new Purchase[purchases.size()]);
         System.out.println("Here is your order:");
         System.out.println("The Price: "+currentPrice);
         for (int i = 0; i < purchases2.length; i++) {
@@ -142,7 +150,7 @@ public class Agent extends User{
         System.out.print("choose a number: ");
         choice = cin.nextInt();cin.nextLine();
         if (choice == 1) ExecutePurchases(purchases2, client);
-        cin.close();
+         
         purchases.clear();
         return;
     }
@@ -154,12 +162,12 @@ public class Agent extends User{
             return;
         }
         Cart cart = new Cart(client);
-        Scanner cin = new Scanner(System.in);
+        Scanner cin =  App.cin;
         cart.ShowCart();
         System.out.print("Validate? (0: no, 1: yes): ");
         if (cin.nextInt() == 1) ExecutePurchases(cart.GetCartPurchases(), client);
         cin.nextLine();
-        cin.close();
+         
     }
 
     private void MakeRefund() {
@@ -169,13 +177,13 @@ public class Agent extends User{
             return;
         }
         App.ClearConsole();
-        Scanner cin = new Scanner(System.in);
+        Scanner cin =  App.cin;
         System.out.print("Enter your purchase reference: ");
         String ref = cin.nextLine();
         String clientPurchaseStr = FileHandler.GetDataByRef(client.getDirectoryPath()+"/purchases.txt", ref);
         if (clientPurchaseStr == null) {
             System.out.println("Purchase doesn't exist");
-            cin.close();
+             
             return;
         }
         Purchase clientPurchase = Purchase.ObjectIt(clientPurchaseStr);
@@ -183,11 +191,11 @@ public class Agent extends User{
         FileHandler.DeleteDataByRef(client.getDirectoryPath()+"/purchases.txt", ref);
         String prodRef = clientPurchase.getRefProd();
         Inventory.ChangeProdQuantity(prodRef, Inventory.AvailableQuantity(prodRef) + clientPurchase.getQte());
-        cin.close();
+         
     }
 
     private void ExecutePurchases(Purchase[] purchases, Client client) {
-        Scanner cin = new Scanner(System.in);
+        Scanner cin =  App.cin;
         LoyaltyAccount account = new LoyaltyAccount(client);
         HashSet<String> categories = new HashSet<String>();
         float price = 0;
@@ -202,18 +210,18 @@ public class Agent extends User{
             categories.add(prod.getCategory());
             price += purchase.getPrice() * purchase.getQte();
         }
-        if (shouldDiscount) System.out.println("The new price is: "+ (price - account.GetDiscount((String[])categories.toArray())));
-        cin.close();
+        if (shouldDiscount) System.out.println("The new price is: "+ (price - account.GetDiscount(categories.toArray(new String[categories.size()]))));
+         
     }
 
     public Client GetClient() {
-        Scanner cin = new Scanner(System.in);
+        Scanner cin =  App.cin;
         int choice;
         System.out.println("Please Sign In/Sign Up the client to begin:");
         System.out.println("1- Sign in          2- Sign Up");
         System.out.print("Choose a number: ");
         choice = cin.nextInt();cin.nextLine();
-        cin.close();
+         
         return choice == 1 ?(Client)Authentication.SignIn('c') :(Client)Authentication.SignUp('c');
     }
 }

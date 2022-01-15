@@ -44,12 +44,13 @@ public class Client extends User{
     @Override
     public void ShowActions() {
         App.ClearConsole();
-        Scanner cin = new Scanner(System.in);
+        Scanner cin =  App.cin;
         System.out.println("Choose an action:");
         System.out.println("1- Search for a product");
         System.out.println("2- Show available products");
         System.out.println("3- Check the cart");
         System.out.println("4- Check 'Loyalty' account");
+        System.out.println("0- Exit");
         System.out.print("Choose a number: ");
         int choice = cin.nextInt();cin.nextLine();
         switch (choice) {
@@ -61,23 +62,28 @@ public class Client extends User{
                 break;
             case 3:
                 cart.ShowCart();
+                System.out.println("Press 'Enter' To go back");
+                cin.nextLine();
                 break;
             case 4:
                 new LoyaltyAccount(this).ShowDetails();
                 break;
+            case 0:
+                App.ClearConsole();
+                return;
             default:
                 System.out.println("Wrong Number!");
                 ShowActions();
                 break;
         }
-        cin.close();
+        ShowActions();
     }
 
     @Override
     protected void UseSelection(Product product) {
         if (product == null) return;
         int availableQte = Inventory.AvailableQuantity(product.getRef());
-        Scanner cin = new Scanner(System.in);
+        Scanner cin =  App.cin;
         System.out.println("Do you want to:");
         System.out.println("1- Add to Cart   0- Go Back");
         System.out.print("Choose a number: ");
@@ -85,7 +91,7 @@ public class Client extends User{
         if (choice == 1) {
             if (availableQte == 0) {
                 System.out.println("Product isn't available right now");
-                cin.close();
+                 
                 return;
             }
             System.out.println("How much do you want?: ");
@@ -95,7 +101,7 @@ public class Client extends User{
                 System.out.println("Would you like to order "+availableQte+" instead?\n(0: no, 1: yes): ");
                 choice = cin.nextInt();cin.nextLine();
                 if (choice == 0) {
-                    cin.close();
+                     
                     return;
                 }
                 qte = availableQte;
@@ -104,7 +110,7 @@ public class Client extends User{
             cart.AddPurchase(pur);
             Inventory.ChangeProdQuantity(product.getRef(), availableQte - qte);
         }
-        cin.close();
+         
     }
 
     public void RecordPurchase(Purchase purchase) {

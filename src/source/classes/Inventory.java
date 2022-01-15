@@ -1,5 +1,6 @@
 package source.classes;
 import java.util.LinkedList;
+
 import source.services.FileHandler;
 
 public abstract class Inventory {
@@ -9,6 +10,7 @@ public abstract class Inventory {
     public static boolean AddProduct(Product prod, int qte){
         if(DoesExist(prod.getRef())) return
             ChangeProdQuantity(prod.getRef(), AvailableQuantity(prod.getRef()) + qte);
+        FileHandler.CreateDIR(inventoryPath);
         FileHandler.Add(inventoryPath+prod.getCategory()+".txt", prod.StringIt()+" "+qte);
         return true; 
     }
@@ -23,8 +25,9 @@ public abstract class Inventory {
 
     public static boolean DoesExist(String ref){
         Product[] result = GetAllProducts();
+        if (result == null) return false;
         for (Product product : result) {
-            if (product.getRef() == ref) return true;
+            if (product.getRef().equals(ref)) return true;
         }
         return false;
     }
@@ -38,12 +41,14 @@ public abstract class Inventory {
     }
 
     public static int AvailableQuantity(String ref){
-            String temp = GetProdDataByRef(ref);
-            return Integer.parseInt(temp.split(" ")[6]);
-        }
+        String temp = GetProdDataByRef(ref);
+        if (temp == null) return 0;
+        return Integer.parseInt(temp.split(" ")[6]);
+    }
 
     public static Product[] GetProductsByCategroy(String cat){
         String temp = FileHandler.GetContent(inventoryPath+cat+".txt");
+        if (temp == null) return new Product[0];
         String[] tempArray = temp.split("\n");
         int size = tempArray.length;
         Product[] result = new Product[size];
@@ -56,7 +61,11 @@ public abstract class Inventory {
     public static Product[] GetAllProducts(){
         String temp = "";
         for (String cat : categories) {
-            temp += FileHandler.GetContent(inventoryPath+cat+".txt");
+            String catContent = FileHandler.GetContent(inventoryPath+cat+".txt");
+            if (catContent != null) temp += catContent;
+        }
+        if (temp.equals("")) {
+            return new Product[0];
         }
         String[] tempArray = temp.split("\n");
         int size = tempArray.length;
@@ -71,36 +80,43 @@ public abstract class Inventory {
     public static String GetProdDataByRef(String ref){
         for (String cat : categories) {
             String prodStr = FileHandler.GetDataByRef(inventoryPath+cat+".txt", ref);
-            if (prodStr!=null) return prodStr;
+            if (prodStr != null) return prodStr;
         }
         return null;
     }
+
     public static Product GetProdByRef(String ref){
-        return Product.ObjectIt(GetProdDataByRef(ref));
+        String prodStr = GetProdDataByRef(ref);
+        if (prodStr == null) return null;
+        return Product.ObjectIt(prodStr);
     }
 
     public static Product[] SearchProducts(String method, String key) {
         Product[] temp = GetAllProducts();
-        LinkedList<Product> result = new LinkedList<Product>(); 
+        if (temp == null) return new Product[0];
+        LinkedList<Product> result = new LinkedList<Product>();
         for (Product product : temp) {
             String field=method == "name" ?product.getName()
                         :method == "ref" ?product.getRef()
                         :method == "desc" ?product.getDescription()
                         :method == "spec" ?product.getSpecs()
                         :null;
-            if (field == null) return null;
+            if (field == null) return new Product[0];
             if (field.indexOf(key) != -1) result.add(product);
-            }
-        return (Product[])result.toArray();
+        }
+        // Product[] finalResult = new Product[result.size()];
+        // for (int i = 0; i < finalResult.length; i++) {
+        //     finalResult[i] = result.get(i);
+        // }
+        // return finalResult;
+        return result.toArray(new Product[result.size()]);
     }
     
     public static String getProdPath(String ref){
-        String  temp = FileHandler.GetDataByRef(inventoryPath + "mi.txt", ref);
-        String temp1 = FileHandler.GetDataByRef(inventoryPath + "em.txt", ref);
-        String temp2 = FileHandler.GetDataByRef(inventoryPath + "ks.txt", ref);
-        if (temp != null) return temp;
-        if (temp1 != null) return temp1;
-        if (temp2 != null) return temp2;
+        for (String cat : categories) {
+            String prodData = FileHandler.GetDataByRef(inventoryPath + cat + ".txt", ref);
+            if (prodData != null) return inventoryPath + cat + ".txt";
+        }
         return null;
     }
 }

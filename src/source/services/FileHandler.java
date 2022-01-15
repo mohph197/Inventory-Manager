@@ -131,16 +131,18 @@ public class FileHandler {
             }
             return result;
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
             return null;
         }
         
     }
 
     public static String ReturnLine(String path, String key){
-        String[] temp = GetContent(path).split("\n");
-        for (String string : temp)
-            if(string.contains(key) == true) return string;
+        String content = GetContent(path);
+        if (content == null) return null;
+        String[] lines = content.split("\n");
+        for (String line : lines) {
+            if(line.contains(key)) return line;
+        }
         return null;
     }
 

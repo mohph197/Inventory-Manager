@@ -8,7 +8,7 @@ public class LoyaltyAccount {
 
     public LoyaltyAccount(Client client) {
         this.clientAccountPath = client.getDirectoryPath()+"/account.txt";
-        if(!FileHandler.FileExists(clientAccountPath)) FileHandler.Add(clientAccountPath,"mi|0\nem|0\nks|0");
+        if(!FileHandler.FileExists(clientAccountPath)) FileHandler.Add(clientAccountPath,"mi 0\nem 0\nks 0");
     }
 
     public boolean RecordPurchase(Purchase pur){

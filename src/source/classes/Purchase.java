@@ -21,6 +21,7 @@ public class Purchase {
     public Purchase(String refProd, int qte, float price) {
         this.date = LocalDate.now();
         this.ref = FileHandler.GenerateUID(2);
+        this.refProd = refProd;
         this.qte = qte;
         this.price = price;
     }

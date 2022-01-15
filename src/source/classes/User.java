@@ -66,7 +66,7 @@ public abstract class User implements Storable{
 
     protected Product SearchProduct() {
         App.ClearConsole();
-        Scanner cin = new Scanner(System.in);
+        Scanner cin =  App.cin;
         System.out.println("Do you want to search by:");
         System.out.println("1- by name   2- by reference   3- by description   4- by specs");
         System.out.print("Choose a number: ");
@@ -74,7 +74,7 @@ public abstract class User implements Storable{
         App.ClearConsole();
         System.out.print("Enter search key: ");
         String searchKey = cin.nextLine();
-        cin.close();
+         
         return ShowSelectProducts(Inventory.SearchProducts(
             choice == 1 ?"name"
            :choice == 2 ?"ref"
@@ -86,7 +86,7 @@ public abstract class User implements Storable{
 
     protected Product ShowSelectProducts(Product[] products) {
         App.ClearConsole();
-        Scanner cin = new Scanner(System.in);
+        Scanner cin =  App.cin;
         int choice;
         for (int i = 0; i < products.length; i++) {
             System.out.println((i+1) + "- " + products[i].StringIt());
@@ -95,30 +95,29 @@ public abstract class User implements Storable{
         System.out.print("Choose a number: ");
         choice = cin.nextInt();cin.nextLine();
         if (choice == 0) {
-            cin.close();
+             
             return null;
         }
         App.ClearConsole();
-        if (choice >= products.length) {
+        if (choice > products.length) {
             System.out.println("Wrong Number!");
-            cin.close();
             ShowSelectProducts(products);
         }
         Product product = products[choice - 1];
         System.out.println("The Product you selected is:");
         System.out.println(product.StringIt());
-        cin.close();
+         
         return product;
     }
 
     protected Product[] ChooseProductCategory() {
         App.ClearConsole();
-        Scanner cin = new Scanner(System.in);
+        Scanner cin =  App.cin;
         System.out.println("Choose a category:");
         System.out.println("1- Informatique et Mobiles   2- Electromenager   3- Kits Solaires   4- All");
         System.out.print("Choose a number: ");
         int choice = cin.nextInt();cin.nextLine();
-        cin.close();
+         
         return   choice == 1 ?Inventory.GetProductsByCategroy("mi")
                 :choice == 2 ?Inventory.GetProductsByCategroy("em")
                 :choice == 3 ?Inventory.GetProductsByCategroy("ks")
