@@ -68,7 +68,7 @@ public abstract class Authentication {
         Scanner cin =  App.cin;
         String[] userInfo = new String[4];
         for (int i = 0; i < userInfo.length; i++) {
-            System.out.println(i == 0 ?"Name : "
+            System.out.print(i == 0 ?"Name : "
                               :i == 1 ?"Surname : "
                               :i == 2 ?"Address : "
                               :i == 3 ?"Password : "

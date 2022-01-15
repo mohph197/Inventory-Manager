@@ -1,7 +1,11 @@
 package source.classes;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 import source.App;
 import source.classes.users.Client;
+import source.exceptions.ObjectDoesntExistException;
 import source.services.FileHandler;
 
 public class Cart {
@@ -43,6 +47,30 @@ public class Cart {
             cost += Float.parseFloat(line[4]) * Integer.parseInt(line[3]);
         }
         System.out.println("The cost is: "+cost);
+    }
+
+    public static void VerifyDuePurchasese() {
+        String clientsFile = FileHandler.GetContent("./data/users/clients.txt");
+        if (clientsFile == null) return;
+        String[] clientsLines = clientsFile.split("\n");
+        for (String clientStr : clientsLines) {
+            try {
+                Client client = Client.ObjectIt(clientStr);
+                String cartContent = FileHandler.GetContent(client.getDirectoryPath()+"/cart.txt");
+                if (cartContent == null) continue;
+                String[] cartLines = cartContent.split("\n");
+                for (String purchaseStr : cartLines) {
+                    Purchase purchase = Purchase.ObjectIt(purchaseStr);
+                    if (ChronoUnit.DAYS.between(purchase.getDate(), LocalDate.now()) >= 2) {
+                        FileHandler.Remove(client.getDirectoryPath()+"/cart.txt", purchaseStr);
+                        Inventory.AddProduct(Inventory.GetProdByRef(purchase.getRefProd()),
+                                            purchase.getQte());
+                    }
+                }
+            } catch (ObjectDoesntExistException e) {
+                return;
+            }
+        }
     }
 
     public boolean AddPurchase(Purchase pur) {

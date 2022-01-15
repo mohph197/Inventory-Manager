@@ -2,6 +2,7 @@ package source;
 import java.io.IOException;
 import java.util.Scanner;
 
+import source.classes.Cart;
 import source.classes.User;
 import source.classes.users.Agent;
 import source.classes.users.Client;
@@ -13,6 +14,7 @@ public class App {
     public static void main(String[] args) {
         ClearConsole();
         while (true) {
+            Cart.VerifyDuePurchasese();
             System.out.println("Hello, please specify which kind of user you are:");
             System.out.println("1- Agent   2- Client   3- Manager   0- Exit");
             System.out.print("Choose a number: ");

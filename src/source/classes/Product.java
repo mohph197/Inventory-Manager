@@ -1,6 +1,5 @@
 package source.classes;
 
-import source.exceptions.ObjectDoesntExistException;
 import source.interfaces.Storable;
 import source.services.FileHandler;
 
@@ -22,14 +21,13 @@ public class Product implements Storable{
 		this.price = price;
 	}
 
-	public Product(String name, String category, String ref, String description, String specs, float price) throws ObjectDoesntExistException{
+	public Product(String name, String category, String ref, String description, String specs, float price) {
 		this.name = name;
 		this.category = category;
 		this.ref = ref;
 		this.description = description;
 		this.specs = specs;
 		this.price = price;
-		if (!Inventory.DoesExist(ref)) throw new ObjectDoesntExistException();
 	}
 	
 	public String StringIt(){
@@ -40,16 +38,7 @@ public class Product implements Storable{
 	public static Product ObjectIt(String data){
 		if (data == null) return null;
 		String[] ProductInfo = data.split(" ");
-		Product temp;
-		try {
-			temp = new Product(ProductInfo[2],ProductInfo[1], ProductInfo[0], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
-		} catch (NumberFormatException e) {
-			System.out.println(e.getMessage());
-			return null;
-		} catch (ObjectDoesntExistException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
+		Product temp = new Product(ProductInfo[2],ProductInfo[1], ProductInfo[0], ProductInfo[3], ProductInfo[4], Float.parseFloat(ProductInfo[5]));
 		return temp;
 	}
 	

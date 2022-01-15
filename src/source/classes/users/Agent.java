@@ -189,6 +189,8 @@ public class Agent extends User{
         }
         Purchase clientPurchase = Purchase.ObjectIt(clientPurchaseStr);
         System.out.println("Here is the price to return: " + clientPurchase.getPrice() * clientPurchase.getQte());
+        System.out.println("Press 'Enter' to proceed...");
+        cin.nextLine();
         FileHandler.DeleteDataByRef(client.getDirectoryPath()+"/purchases.txt", ref);
         String prodRef = clientPurchase.getRefProd();
         Inventory.ChangeProdQuantity(prodRef, Inventory.AvailableQuantity(prodRef) + clientPurchase.getQte());
@@ -212,7 +214,8 @@ public class Agent extends User{
             price += purchase.getPrice() * purchase.getQte();
         }
         if (shouldDiscount) System.out.println("The new price is: "+ (price - account.GetDiscount(categories.toArray(new String[categories.size()]))));
-         
+        System.out.println("Press 'Enter' to continue...");
+        cin.nextLine();
     }
 
     public Client GetClient() {
