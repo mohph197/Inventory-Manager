@@ -55,8 +55,6 @@ public class Agent extends User{
                 break;
             case 2:
                 ShowSelectProducts(ChooseProductCategory());
-                System.out.println("Press 'Enter' To go back");
-                cin.nextLine();
                 break;
             case 3:
                 ValidateCart();
@@ -80,8 +78,8 @@ public class Agent extends User{
 
     @Override
     protected void UseSelection(Product product) {
-        System.out.println("The product you selected:");
-        System.out.println(Inventory.GetProdDataByRef(product.getRef()));
+        System.out.println("Press 'Enter' To go back");
+        App.cin.nextLine();
     }
 
     private void InitPurchase() {

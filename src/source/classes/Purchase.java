@@ -1,9 +1,10 @@
 package source.classes;
 import java.time.LocalDate;
 
+import source.interfaces.Storable;
 import source.services.FileHandler;
 
-public class Purchase {
+public class Purchase implements Storable{
     private String ref;
     private String refProd;
     private LocalDate date;

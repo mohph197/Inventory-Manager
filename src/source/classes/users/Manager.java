@@ -24,6 +24,48 @@ public class Manager extends User {
             throw new ObjectDoesntExistException();
     }
 
+    @Override
+    public void ShowActions() {
+        App.ClearConsole();
+        Scanner cin =  App.cin;
+        System.out.println("Choose an action:");
+        System.out.println("1- Search for a product details");
+        System.out.println("2- Show available products");
+        System.out.println("3- Add a new product");
+        System.out.println("4- Change the price for a product");
+        System.out.println("0- Exit");
+        System.out.print("Choose a number: ");
+        int choice = cin.nextInt();cin.nextLine();
+        switch (choice) {
+            case 1:
+                UseSelection(SearchProduct());
+                break;
+            case 2:
+                UseSelection(ShowSelectProducts(ChooseProductCategory()));
+                break;
+            case 3:
+                AddProduct();
+                break;
+            case 4:
+                ChangePrice();
+                break;
+            case 0:
+                App.ClearConsole();
+                return;
+            default:
+                System.out.println("Wrong Number!");
+                ShowActions();
+                break;
+        }
+        ShowActions();
+    }
+
+    @Override
+    protected void UseSelection(Product product) {
+        System.out.println("Press 'Enter' To go back");
+        App.cin.nextLine();
+    }
+
     private boolean AddProduct(){
         App.ClearConsole();
         Scanner cin =  App.cin;
@@ -40,14 +82,6 @@ public class Manager extends User {
         String category = prodinfo[1];
         if (!category.equals("mi") && !category.equals("em") && !category.equals("ks")) return false;
         Product prod = new Product(prodinfo[0], prodinfo[1], prodinfo[2], prodinfo[3], Float.parseFloat(prodinfo[4]));
-        // if(Inventory.DoesExist(prod.getRef())){
-        //     System.out.println("Product Already Exists !");
-        //     System.out.println("Would you like to retry :\n 1- Yes    0- No");
-        //     int in = cin.nextInt();cin.nextLine();
-             
-        //     if(in == 1) return AddProduct();
-        //     return false;
-        // }
         System.out.print("Quantity : ");
         int in = cin.nextInt();cin.nextLine();
         return Inventory.AddProduct(prod, in);
@@ -74,35 +108,4 @@ public class Manager extends User {
          
         return Inventory.ChangePrice(ref, price, cat);
     }
-
-    @Override
-    public void ShowActions() {
-        App.ClearConsole();
-        Scanner cin =  App.cin;
-        System.out.println("Choose an action:");
-        System.out.println("1- Add a new product");
-        System.out.println("2- Change the price for a product");
-        System.out.println("0- Exit");
-        System.out.print("Choose a number: ");
-        int choice = cin.nextInt();cin.nextLine();
-        switch (choice) {
-            case 1:
-                AddProduct();
-                break;
-            case 2:
-                ChangePrice();
-                break;
-            case 0:
-                App.ClearConsole();
-                return;
-            default:
-                System.out.println("Wrong Number!");
-                ShowActions();
-                break;
-        }
-        ShowActions();
-    }
-    
-    @Override
-    protected void UseSelection(Product product) {}
 }
