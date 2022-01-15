@@ -15,6 +15,7 @@ public class App {
         ClearConsole();
         while (true) {
             Cart.VerifyDuePurchasese();
+            System.err.println("\nPLEASE DON'T USE SPACES WHEN ENTERING DATA\nUSE (_) (UNDERSCORE) INSTEAD\n");
             System.out.println("Hello, please specify which kind of user you are:");
             System.out.println("1- Agent   2- Client   3- Manager   0- Exit");
             System.out.print("Choose a number: ");

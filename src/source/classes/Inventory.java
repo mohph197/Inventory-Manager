@@ -108,13 +108,8 @@ public abstract class Inventory {
                         :method == "spec" ?product.getSpecs()
                         :null;
             if (field == null) return new Product[0];
-            if (field.indexOf(key) != -1) result.add(product);
+            if (field.toLowerCase().indexOf(key.toLowerCase()) != -1) result.add(product);
         }
-        // Product[] finalResult = new Product[result.size()];
-        // for (int i = 0; i < finalResult.length; i++) {
-        //     finalResult[i] = result.get(i);
-        // }
-        // return finalResult;
         return result.toArray(new Product[result.size()]);
     }
     

@@ -26,7 +26,7 @@ public abstract class Authentication {
         String[] users = usersStr.split("\n");
         for (String user : users) {
             String[] creds = user.split(" ");
-            if (creds[3].equals(adr)) return VerifyUser(creds, type);
+            if (creds[3].toLowerCase().equals(adr.toLowerCase())) return VerifyUser(creds, type);
         }
         System.out.println("User doesn't Exist!");
         return null;
