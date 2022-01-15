@@ -23,9 +23,9 @@ public class LoyaltyAccount {
         String[] data = FileHandler.GetContent(clientAccountPath).split("\n");
         for (int i = 0; i < 3; i++) {
             float price = Float.parseFloat(data[i].split(" ")[1]);
-            float discount = price* (data[i].split(" ")[0] == "mi" ?5
-                                    :data[i].split(" ")[0] == "em" ?10
-                                    :data[i].split(" ")[0] == "ks" ?15
+            float discount = price *(data[i].split(" ")[0].equals("mi") ?5.0f
+                                    :data[i].split(" ")[0].equals("em") ?10.0f
+                                    :data[i].split(" ")[0].equals("ks") ?15.0f
                                     :0) / 100.0f;
             System.out.println((i+1)+"- "+categoriesDetailed[i]+": "+price+" --> "+discount);
         }
@@ -36,11 +36,11 @@ public class LoyaltyAccount {
         for (String cat : categories) {
             String oldData = FileHandler.GetDataByRef(clientAccountPath, cat);
             float oldPrice = Float.parseFloat(oldData.split(" ")[1]);
-            discount += oldPrice *  (cat == "mi" ?5
-                                    :cat == "em" ?10
-                                    :cat == "ks" ?15
+            discount += oldPrice *  (cat.equals("mi") ?5
+                                    :cat.equals("em") ?10
+                                    :cat.equals("ks") ?15
                                     :0) / 100.0f;
-            FileHandler.ModifyData(clientAccountPath, oldData, cat + "|0");
+            FileHandler.ModifyData(clientAccountPath, oldData, cat + " 0");
         }
         return discount;
     }

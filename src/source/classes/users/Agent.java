@@ -71,7 +71,7 @@ public class Agent extends User{
                 ShowActions();
                 break;
         }
-         
+        ShowActions();
     }
 
     @Override
@@ -132,13 +132,9 @@ public class Agent extends User{
         }
         if (choice == 0) {
             purchases.clear();
-             
             return;
         }
-        // Purchase[] purchases2 = new Purchase[purchases.size()];
-        // for (int i = 0; i < purchases2.length; i++) {
-        //     purchases2[i] = purchases.get(i);
-        // }
+        App.ClearConsole();
         Purchase[] purchases2 = purchases.toArray(new Purchase[purchases.size()]);
         System.out.println("Here is your order:");
         System.out.println("The Price: "+currentPrice);
@@ -149,7 +145,7 @@ public class Agent extends User{
         System.out.println("1- Confirm   2- Cancel");
         System.out.print("choose a number: ");
         choice = cin.nextInt();cin.nextLine();
-        if (choice == 1) ExecutePurchases(purchases2, client);
+        if (choice == 1) ExecutePurchases(purchases2, client, true);
          
         purchases.clear();
         return;
@@ -165,7 +161,10 @@ public class Agent extends User{
         Scanner cin =  App.cin;
         cart.ShowCart();
         System.out.print("Validate? (0: no, 1: yes): ");
-        if (cin.nextInt() == 1) ExecutePurchases(cart.GetCartPurchases(), client);
+        if (cin.nextInt() == 1) {
+            ExecutePurchases(cart.GetCartPurchases(), client, false);
+            cart.ClearCart();
+        }
         cin.nextLine();
          
     }
@@ -194,7 +193,7 @@ public class Agent extends User{
          
     }
 
-    private void ExecutePurchases(Purchase[] purchases, Client client) {
+    private void ExecutePurchases(Purchase[] purchases, Client client, boolean updateInventory) {
         Scanner cin =  App.cin;
         LoyaltyAccount account = new LoyaltyAccount(client);
         HashSet<String> categories = new HashSet<String>();
@@ -204,7 +203,7 @@ public class Agent extends User{
         cin.nextLine();
         for (Purchase purchase : purchases) {
             Product prod = Inventory.GetProdByRef(purchase.getRefProd());
-            Inventory.ChangeProdQuantity(prod.getRef(), Inventory.AvailableQuantity(prod.getRef()) - purchase.getQte());
+            if (updateInventory) Inventory.ChangeProdQuantity(prod.getRef(), Inventory.AvailableQuantity(prod.getRef()) - purchase.getQte());
             if (!shouldDiscount) account.RecordPurchase(purchase);
             client.RecordPurchase(purchase);
             categories.add(prod.getCategory());

@@ -67,6 +67,8 @@ public class Client extends User{
                 break;
             case 4:
                 new LoyaltyAccount(this).ShowDetails();
+                System.out.println("Press 'Enter' To go back");
+                cin.nextLine();
                 break;
             case 0:
                 App.ClearConsole();

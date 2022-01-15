@@ -16,10 +16,16 @@ public abstract class Inventory {
     }
 
     public static boolean ChangeProdQuantity(String ref, int qte){
-        String prodData = GetProdDataByRef(ref);
-        if(prodData == null ) return false;
-        String newData = prodData.replace(prodData.split(" ")[6], String.valueOf(qte));
-        FileHandler.ModifyData(inventoryPath+(prodData.split(" ")[1])+".txt", prodData, newData);
+        String prodLine = GetProdDataByRef(ref);
+        if(prodLine == null ) return false;
+        String[] prodData = prodLine.split(" ");
+        prodData[6] = String.valueOf(qte);
+        String newData = "";
+        for (String string : prodData) {
+            newData += string+" ";
+        }
+        newData = newData.substring(0, newData.length() - 1);
+        FileHandler.ModifyData(inventoryPath+prodData[1]+".txt", prodLine, newData);
         return true;
     }
 

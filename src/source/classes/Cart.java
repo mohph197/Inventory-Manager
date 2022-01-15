@@ -49,6 +49,10 @@ public class Cart {
         return FileHandler.Add(filePath, pur.StringIt());
     }
 
+    public boolean ClearCart() {
+        return FileHandler.ClearFile(filePath);
+    }
+
     public Client getClient() {
         return client;
     }
