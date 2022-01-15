@@ -1,2 +1,5 @@
-1 mi Iphone shit shit 100.0 5
-2 mi MacBook shit shit 200.0 10
+1 mi Iphone Mobile_Phone IOS_Powerfull_Incredible 100.0 5
+2 mi MacBook Personel_Laptop MacOS_Fast_Performant 2000.0 10
+6 mi Samsung Mobile_Phone Android_GreatCamera_GoodPerfermance 110.0 25
+9 mi Pixel Mobile_Phone Google_Android_Excelent 230.0 12
+8 mi Dell Personel_Laptop Windows_i7-8eme_512SSD_8GB 1200.0 23

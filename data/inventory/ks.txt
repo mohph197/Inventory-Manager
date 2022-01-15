@@ -1,1 +1,3 @@
-5 ks Paneau shit shit 4900.0 3
+5 ks Panneau Energical Energy_source 49000.0 3
+12 ks Batterie MonkitSolaire Save_energy 1000.0 57
+13 ks Cables Hydrao Transform_electricity 120.0 123

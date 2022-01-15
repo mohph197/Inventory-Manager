@@ -1,2 +1,5 @@
-3 em Fridge shit shit 2130.0 5
-4 em Oven shit shit 3000.0 1
+3 em Fridge Condor Cold 2130.0 5
+4 em Oven LG HOT 3000.0 7
+7 em Furnace Samsung Extremly_hot 2430.0 10
+10 em Freezer Condor Saves_food 5500.0 3
+11 em Washing_Machine Samsung Clean_cloths 2230.0 12
