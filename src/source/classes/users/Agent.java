@@ -49,10 +49,14 @@ public class Agent extends User{
         int choice = cin.nextInt();cin.nextLine();
         switch (choice) {
             case 1:
-                UseSelection(SearchProduct());
+                SearchProduct();
+                System.out.println("Press 'Enter' To go back");
+                cin.nextLine();
                 break;
             case 2:
-                UseSelection(ShowSelectProducts(ChooseProductCategory()));
+                ShowSelectProducts(ChooseProductCategory());
+                System.out.println("Press 'Enter' To go back");
+                cin.nextLine();
                 break;
             case 3:
                 ValidateCart();
